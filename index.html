@@ -225,7 +225,7 @@
           <div class="step-divider"></div>
           <div class="step-val">
             <div class="step-val-main" id="extraVal">0 小時</div>
-            <div class="step-val-sub" id="extraHint">不延長</div>
+            <div class="step-val-sub" id="extraHint"></div>
           </div>
           <div class="step-divider"></div>
           <button class="step-btn" id="btnExtraPlus" onclick="changeExtra(1)" aria-label="增加">
@@ -489,13 +489,11 @@
       // Extension stepper
       if (extraHalfHours === 0) {
         document.getElementById('extraVal').textContent = '0 小時';
-        document.getElementById('extraHint').textContent = '不延長';
       } else {
         const hrs  = Math.floor(extraHalfHours / 2);
         const half = extraHalfHours % 2 === 1;
         const label = hrs > 0 && half ? `${hrs} 小時 30 分` : hrs > 0 ? `${hrs} 小時` : '30 分';
         document.getElementById('extraVal').textContent = label;
-        document.getElementById('extraHint').textContent = `+$${extraFee.toLocaleString()}`;
       }
 
       // Head count stepper
