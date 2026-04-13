@@ -25,8 +25,7 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      /* leave space for sticky result bar */
-      padding-bottom: calc(130px + env(safe-area-inset-bottom));
+      padding-bottom: calc(140px + env(safe-area-inset-bottom));
     }
 
     /* ── Hero ── */
@@ -79,9 +78,46 @@
       border-radius: 999px;
     }
 
-    /* ── Main content ── */
+    /* ── Day type toggle ── */
+    .day-toggle-wrap {
+      padding: 0.875rem 1rem 0;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .day-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.05);
+    }
+    .day-btn {
+      padding: 11px 0;
+      border: none;
+      background: transparent;
+      border-radius: 11px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .day-btn.active {
+      background: var(--dark);
+      color: var(--gold);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .day-btn:not(.active):active { background: #f2f2f7; }
+
+    /* ── Content ── */
     .content {
-      padding: 1rem 1rem 0;
+      padding: 0.75rem 1rem 0;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
@@ -109,11 +145,8 @@
     }
 
     /* ── Fields ── */
-    .field {
-      margin-bottom: 0.9rem;
-    }
+    .field { margin-bottom: 0.9rem; }
     .field:last-child { margin-bottom: 0; }
-
     .field-label {
       font-size: 13px;
       font-weight: 500;
@@ -133,7 +166,7 @@
     .select-wrap { position: relative; }
     select {
       width: 100%;
-      font-size: 16px; /* prevent iOS zoom */
+      font-size: 16px;
       font-weight: 600;
       color: var(--text);
       padding: 13px 40px 13px 14px;
@@ -165,32 +198,20 @@
       overflow: hidden;
     }
     .step-btn {
-      width: 52px;
-      height: 52px;
+      width: 52px; height: 52px;
       border: none;
       background: transparent;
       color: var(--text);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
       transition: background 0.1s;
     }
     .step-btn:active:not(:disabled) { background: #e5e5ea; }
     .step-btn:disabled { opacity: 0.25; cursor: not-allowed; }
-    .step-divider {
-      width: 1px;
-      height: 28px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-    .step-val {
-      flex: 1;
-      text-align: center;
-      padding: 4px 0;
-    }
+    .step-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+    .step-val { flex: 1; text-align: center; padding: 4px 0; }
     .step-val-main { font-size: 16px; font-weight: 600; color: var(--text); }
     .step-val-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
 
@@ -229,59 +250,29 @@
     }
     .time-chip svg { color: var(--text-3); flex-shrink: 0; }
 
-    .divider {
-      border: none;
-      border-top: 1px solid #f2f2f7;
-      margin: 1rem 0;
-    }
+    .divider { border: none; border-top: 1px solid #f2f2f7; margin: 1rem 0; }
 
     /* ── Sticky Result ── */
     .result-bar {
       position: fixed;
-      bottom: 0;
-      left: 0; right: 0;
+      bottom: 0; left: 0; right: 0;
       background: var(--dark);
       padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
       z-index: 100;
       box-shadow: 0 -1px 0 rgba(255,255,255,0.06), 0 -8px 24px rgba(0,0,0,0.25);
     }
-    .result-bar-inner {
-      max-width: 520px;
-      margin: 0 auto;
-    }
+    .result-bar-inner { max-width: 520px; margin: 0 auto; }
     .result-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       margin-bottom: 0.7rem;
     }
-    .result-lhs {}
-    .result-label {
-      font-size: 11px;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 3px;
-      letter-spacing: 0.3px;
-    }
-    .result-amount {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: -0.5px;
-      line-height: 1;
-    }
-    .result-detail {
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      margin-top: 5px;
-      line-height: 1.7;
-    }
+    .result-label { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
+    .result-amount { font-size: 28px; font-weight: 700; color: var(--gold); letter-spacing: -0.5px; line-height: 1; }
+    .result-detail { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 5px; line-height: 1.7; }
     .result-rhs { text-align: right; }
-    .result-per-amount {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-    }
+    .result-per-amount { font-size: 18px; font-weight: 700; color: var(--gold); line-height: 1; }
     .result-note {
       display: flex;
       align-items: center;
@@ -294,12 +285,7 @@
       color: var(--gold);
     }
 
-    .footer-note {
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-3);
-      padding: 0.5rem 0 0.25rem;
-    }
+    .footer-note { text-align: center; font-size: 11px; color: var(--text-3); padding: 0.5rem 0 0.25rem; }
   </style>
 </head>
 <body>
@@ -308,14 +294,27 @@
   <div class="hero">
     <div class="hero-tag">
       <i data-lucide="calendar" style="width:11px;height:11px;"></i>
-      假日包場
+      Wink 包場方案
     </div>
-    <div class="hero-title">Wink 夜場方案</div>
-    <div class="hero-sub">至少 4 小時包場<br>選好時間，輕鬆試算費用</div>
+    <div class="hero-title">夜場費用試算</div>
+    <div class="hero-sub">選好日期類型與時間<br>輕鬆試算包場費用</div>
     <div class="badges">
       <span class="badge"><i data-lucide="clock" style="width:11px;height:11px;"></i>至少 4 小時</span>
-      <span class="badge"><i data-lucide="user" style="width:11px;height:11px;"></i>人頭 $500／位</span>
       <span class="badge"><i data-lucide="users" style="width:11px;height:11px;"></i>最低 30 位起</span>
+    </div>
+  </div>
+
+  <!-- Day type toggle -->
+  <div class="day-toggle-wrap">
+    <div class="day-toggle">
+      <button class="day-btn active" id="btnWeekday" onclick="setDayType('weekday')">
+        <i data-lucide="sun" style="width:15px;height:15px;"></i>
+        平日
+      </button>
+      <button class="day-btn" id="btnHoliday" onclick="setDayType('holiday')">
+        <i data-lucide="star" style="width:15px;height:15px;"></i>
+        假日
+      </button>
     </div>
   </div>
 
@@ -394,7 +393,7 @@
   <div class="result-bar">
     <div class="result-bar-inner">
       <div class="result-row">
-        <div class="result-lhs">
+        <div>
           <div class="result-label">預估總費用</div>
           <div id="resultAmount" class="result-amount">–</div>
           <div id="resultDetail" class="result-detail">–</div>
@@ -414,8 +413,34 @@
   <script>
     lucide.createIcons();
 
-    const BASE_PRICE = 14000;
-    const BASE_END = 1230;
+    const PRICING = {
+      weekday: {
+        base: 14000,
+        extBefore: 1500,
+        extAfter: 1500,
+        perHead: 400,
+        minHead: 30,
+      },
+      holiday: {
+        base: 14000,
+        extBefore: 1500,
+        extAfter: 3000,
+        perHead: 500,
+        minHead: 30,
+      }
+    };
+
+    const BASE_END = 1230; // 20:30 in minutes
+    let dayType = 'weekday';
+
+    function setDayType(type) {
+      dayType = type;
+      document.getElementById('btnWeekday').classList.toggle('active', type === 'weekday');
+      document.getElementById('btnHoliday').classList.toggle('active', type === 'holiday');
+      extraHalfHours = 0;
+      calc();
+      lucide.createIcons();
+    }
 
     const slots = [];
     for (let m = 720; m <= 1440; m += 30) {
@@ -437,12 +462,44 @@
     let extraHalfHours = 0;
 
     function calcVenuePrice(startMin, extraHalves) {
+      const p = PRICING[dayType];
       const baseEndMin = startMin + 240;
-      let price = BASE_PRICE;
-      if (baseEndMin > BASE_END) price += ((baseEndMin - BASE_END) / 30) * 3000;
+      let price = p.base;
+
+      // base 4-hour window: charge difference for time after BASE_END
+      if (baseEndMin > BASE_END) {
+        const overHalves = (baseEndMin - BASE_END) / 30;
+        price += overHalves * (p.extAfter - p.extBefore);
+        // The base price already covers extBefore-rate time;
+        // we upgrade the post-BASE_END portion to extAfter rate.
+        // Actually simpler: each half-hour of the base window past BASE_END
+        // costs (extAfter - extBefore) extra vs. if it were before BASE_END.
+        // But original logic treated base price as flat — let's keep the
+        // original approach: base covers up to BASE_END at flat rate, then
+        // each half-hour past BASE_END inside the base window costs extAfter.
+      }
+
       for (let i = 0; i < extraHalves; i++) {
         const thisEnd = baseEndMin + (i + 1) * 30;
-        price += thisEnd <= BASE_END ? 1500 : 3000;
+        price += thisEnd <= BASE_END ? p.extBefore : p.extAfter;
+      }
+      return price;
+    }
+
+    // Rewrite calcVenuePrice to match original logic exactly
+    function calcVenuePriceV2(startMin, extraHalves) {
+      const p = PRICING[dayType];
+      const baseEndMin = startMin + 240;
+      let price = p.base;
+
+      // Original: if base 4h window overshoots BASE_END, add (overshoot / 30) * extAfter
+      if (baseEndMin > BASE_END) {
+        price += ((baseEndMin - BASE_END) / 30) * p.extAfter;
+      }
+
+      for (let i = 0; i < extraHalves; i++) {
+        const thisEnd = baseEndMin + (i + 1) * 30;
+        price += thisEnd <= BASE_END ? p.extBefore : p.extAfter;
       }
       return price;
     }
@@ -470,6 +527,7 @@
     }
 
     function calc() {
+      const p = PRICING[dayType];
       const idx = parseInt(sel.value);
       const slot = slots[idx];
       const maxExtra = Math.floor((1680 - slot.minutes - 240) / 30);
@@ -478,36 +536,36 @@
       const endMin = slot.minutes + 240 + extraHalfHours * 30;
       document.getElementById('endTime').textContent = toTimeLabel(endMin);
 
-      const venueTotal = calcVenuePrice(slot.minutes, extraHalfHours);
-      const basePrice = calcVenuePrice(slot.minutes, 0);
-      const extraFee = venueTotal - basePrice;
+      const venueTotal = calcVenuePriceV2(slot.minutes, extraHalfHours);
+      const basePrice  = calcVenuePriceV2(slot.minutes, 0);
+      const extraFee   = venueTotal - basePrice;
 
       if (extraHalfHours === 0) {
         document.getElementById('extraVal').textContent = '0 小時';
         document.getElementById('extraHint').textContent = '不延長';
       } else {
-        const hrs = Math.floor(extraHalfHours / 2);
+        const hrs  = Math.floor(extraHalfHours / 2);
         const half = extraHalfHours % 2 === 1;
         const label = hrs > 0 && half ? `${hrs} 小時 30 分` : hrs > 0 ? `${hrs} 小時` : '30 分';
         document.getElementById('extraVal').textContent = label;
         document.getElementById('extraHint').textContent = `+$${extraFee.toLocaleString()}`;
       }
 
-      const raw = Math.max(parseInt(document.getElementById('headCount').value) || 30, 30);
-      const headFee = raw * 500;
-      const total = venueTotal + headFee;
+      const raw     = Math.max(parseInt(document.getElementById('headCount').value) || 30, 30);
+      const headFee = raw * p.perHead;
+      const total   = venueTotal + headFee;
       const perPerson = Math.round(total / raw);
 
       document.getElementById('resultAmount').textContent = '$' + total.toLocaleString();
-      document.getElementById('perPerson').textContent = '$' + perPerson.toLocaleString();
+      document.getElementById('perPerson').textContent    = '$' + perPerson.toLocaleString();
 
       let detail = `場地 $${venueTotal.toLocaleString()}`;
       if (extraHalfHours > 0) detail += `（含延長 $${extraFee.toLocaleString()}）`;
-      detail += `\n人頭 $${headFee.toLocaleString()}（${raw} 位）`;
+      detail += `\n人頭 $${headFee.toLocaleString()}（${raw} 位 × $${p.perHead}）`;
       document.getElementById('resultDetail').textContent = detail;
 
       document.getElementById('btnMinus').disabled = extraHalfHours === 0;
-      document.getElementById('btnPlus').disabled = extraHalfHours >= maxExtra;
+      document.getElementById('btnPlus').disabled  = extraHalfHours >= maxExtra;
 
       lucide.createIcons();
     }
