@@ -288,6 +288,15 @@
     }
 
     .footer-note { text-align: center; font-size: 11px; color: var(--text-3); padding: 0.5rem 0 0.25rem; }
+    .version-badge {
+      position: fixed;
+      bottom: calc(8px + env(safe-area-inset-bottom));
+      right: 10px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.2);
+      z-index: 99;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -300,6 +309,9 @@
     </div>
     <div class="hero-title">Wink · 1 號店</div>
     <div class="hero-sub">至少 4 小時 · 最低 30 位起</div>
+    <div style="display:inline-block;margin-top:0.75rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:0.5px;">
+      2026 年適用
+    </div>
   </div>
 
   <!-- Day type toggle -->
@@ -384,7 +396,7 @@
       </div>
     </div>
 
-    <div class="footer-note">2026 年適用 &nbsp;·&nbsp; 費用單位新台幣 &nbsp;·&nbsp; <span id="versionLabel"></span></div>
+    <div class="footer-note">費用單位為新台幣</div>
   </div>
 
   <!-- Sticky Result Bar -->
@@ -413,6 +425,8 @@
       </div>
     </div>
   </div>
+
+  <div class="version-badge" id="versionLabel"></div>
 
   <script>
     lucide.createIcons();
