@@ -45,7 +45,6 @@
       margin-bottom: 0.9rem; letter-spacing: 0.5px;
     }
     .hero-title { font-size: 26px; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: -0.5px; }
-    .hero-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; line-height: 1.5; }
     .hero-year {
       display: inline-block;
       background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
@@ -160,7 +159,7 @@
 
     .footer-note { text-align: center; font-size: 11px; color: var(--text-3); padding: 0.5rem 0 0.25rem; }
     .version-badge {
-      position: fixed; bottom: calc(8px + env(safe-area-inset-bottom)); right: 10px;
+      position: fixed; bottom: calc(160px + env(safe-area-inset-bottom)); right: 10px;
       font-size: 10px; color: rgba(255,255,255,0.2); z-index: 99; pointer-events: none;
     }
   </style>
@@ -237,6 +236,7 @@
         <div class="field-label">
           <i data-lucide="flag" style="width:14px;height:14px;"></i>
           結束時間
+          <span class="field-label-sub">包場至少 4 小時，未滿以 4 小時計</span>
         </div>
         <div class="time-chip">
           <i data-lucide="moon" style="width:15px;height:15px;"></i>
@@ -367,6 +367,7 @@
       document.getElementById('btnHoliday').classList.toggle('active', type === 'holiday');
       const p = CONFIG.pricing[type];
       if (headCount < p.minHead) headCount = p.minHead;
+      if (headCount > p.maxHead) headCount = p.maxHead;
       extraHalfHours = 0;
       calc();
       lucide.createIcons();
@@ -425,10 +426,11 @@
       return price;
     }
 
-    function toTimeLabel(minutes) {
+    function toTimeLabel(minutes, showNextDay = false) {
       const h = Math.floor(minutes / 60) % 24;
       const mm = minutes % 60;
-      return String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+      const time = String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+      return showNextDay && minutes >= 1440 ? time + '（隔日）' : time;
     }
 
 // ── Copy quote ──
@@ -480,7 +482,7 @@
       if (extraHalfHours > maxExtra) extraHalfHours = Math.max(0, maxExtra);
 
       const endMin = slot.minutes + _baseDuration + extraHalfHours * _slotStep;
-      document.getElementById('endTime').textContent = toTimeLabel(endMin);
+      document.getElementById('endTime').textContent = toTimeLabel(endMin, true);
 
       const venueTotal = calcVenuePrice(slot.minutes, extraHalfHours);
       const basePrice  = calcVenuePrice(slot.minutes, 0);
