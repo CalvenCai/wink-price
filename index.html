@@ -500,7 +500,7 @@
 
       // Head count stepper
       document.getElementById('headVal').textContent = headCount;
-      document.getElementById('headHint').textContent = headCount <= p.minHead ? `最低 ${p.minHead} 位` : `${headCount} 位`;
+      document.getElementById('headHint').textContent = headCount <= p.minHead ? `未滿 ${p.minHead} 位，以 ${p.minHead} 位計` : '';
 
       // Results
       const headFee   = headCount * p.perHead;
