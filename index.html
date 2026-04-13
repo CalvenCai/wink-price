@@ -2,7 +2,11 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Wink 包場試算" />
+  <meta name="theme-color" content="#0f1a24" />
   <title>Wink 夜場方案試算</title>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -27,7 +31,10 @@
       color: var(--text);
       min-height: 100vh;
       padding-bottom: calc(210px + env(safe-area-inset-bottom));
+      overscroll-behavior: none;
+      -webkit-user-select: none; user-select: none;
     }
+    input, select { -webkit-user-select: auto; user-select: auto; }
 
     /* ── Hero ── */
     .hero {
