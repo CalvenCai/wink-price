@@ -312,9 +312,10 @@
     //  CONFIG — 調整價格只需修改這裡
     // ═══════════════════════════════════════
     const CONFIG = {
-      version:         'v1.0',
+      version:         'v1.1',
       depositRate:     0.3,     // 預收訂金比例（0.3 = 30%）
       operatingStart:  '20:30', // 營業時段起點
+      lateAfter:       '26:00', // 顛峰結束時間（隔天 02:00，以 26:00 表示）
       baseHours:       4,       // 基本包場時數
       defaultStart:    '19:00', // 預設開始時間
       slotFrom:        '12:00', // 最早可選開始時間
@@ -326,6 +327,7 @@
           base:      14000,  // 基本場地費
           extBefore: 1000,   // 營業前延長費／每半小時
           extAfter:  1000,   // 營業後延長費／每半小時
+          extLate:   1000,   // 02:00 後延長費／每半小時（平日全段相同）
           perHead:   400,    // 人頭費／每位
           minHead:   30,     // 最低人數
           maxHead:   150,    // 最多人數
@@ -335,6 +337,7 @@
           base:      14000,
           extBefore: 1500,
           extAfter:  3000,
+          extLate:   2000,   // 02:00 後延長費（顛峰後優惠）
           perHead:   500,
           minHead:   30,
           maxHead:   150,
@@ -349,6 +352,7 @@
     }
 
     const _operatingStart = toMin(CONFIG.operatingStart);
+    const _lateAfter      = toMin(CONFIG.lateAfter);
     const _baseDuration   = CONFIG.baseHours * 60;
     const _slotFrom       = toMin(CONFIG.slotFrom);
     const _slotTo         = toMin(CONFIG.slotTo);
@@ -418,12 +422,22 @@
       const p = CONFIG.pricing[dayType];
       const baseEndMin = startMin + _baseDuration;
       let price = p.base;
+
+      // 基本 4 小時內超過 20:30 的部分
       if (baseEndMin > _operatingStart) {
-        price += ((baseEndMin - _operatingStart) / _slotStep) * p.extAfter;
+        const afterOperate = baseEndMin - _operatingStart;
+        const inLate  = Math.max(0, baseEndMin - _lateAfter);
+        const inAfter = afterOperate - inLate;
+        price += (inAfter / _slotStep) * p.extAfter;
+        price += (inLate  / _slotStep) * p.extLate;
       }
+
+      // 延長時數
       for (let i = 0; i < extraHalves; i++) {
         const thisEnd = baseEndMin + (i + 1) * _slotStep;
-        price += thisEnd <= _operatingStart ? p.extBefore : p.extAfter;
+        if (thisEnd <= _operatingStart)  price += p.extBefore;
+        else if (thisEnd <= _lateAfter)  price += p.extAfter;
+        else                             price += p.extLate;
       }
       return price;
     }
