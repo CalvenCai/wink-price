@@ -10,7 +10,6 @@
 
     :root {
       --accent: #b8706c;
-      --blue:   #2d6080;
       --dark:   #1b2a38;
       --bg:     #0f1a24;
       --card:   #1b2a38;
@@ -27,13 +26,13 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: calc(160px + env(safe-area-inset-bottom));
+      padding-bottom: calc(210px + env(safe-area-inset-bottom));
     }
 
     /* ── Hero ── */
     .hero {
       background: var(--dark);
-      padding: 3rem 1.25rem 2rem;
+      padding: 1.5rem 1.25rem 1.25rem;
       text-align: center;
       color: #fff;
     }
@@ -45,29 +44,13 @@
       margin-bottom: 0.9rem; letter-spacing: 0.5px;
     }
     .hero-title { font-size: 26px; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: -0.5px; }
-    .hero-year {
-      display: inline-block;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 999px; padding: 4px 12px;
-      font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.5px;
-    }
 
-    /* ── Toggle ── */
-    .day-toggle-wrap { padding: 0.875rem 1rem 0; max-width: 520px; margin: 0 auto; }
-    .day-toggle {
-      display: grid; grid-template-columns: 1fr 1fr;
-      background: var(--card); border-radius: 14px; padding: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.05);
+    /* ── Day type badge ── */
+    .day-type-badge {
+      font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+      background: var(--accent); color: #fff; letter-spacing: 0.3px;
     }
-    .day-btn {
-      padding: 11px 0; border: none; background: transparent; border-radius: 11px;
-      font-size: 15px; font-weight: 600; color: var(--text-2); cursor: pointer;
-      transition: background 0.18s, color 0.18s;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .day-btn.active { background: var(--accent); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
-    .day-btn:not(.active):active { background: var(--card-2); }
+    .day-type-badge.weekday { background: var(--card-2); color: var(--text-2); border: 1px solid var(--border); }
 
     /* ── Content ── */
     .content { padding: 0.75rem 1rem 0; display: flex; flex-direction: column; gap: 0.75rem; max-width: 520px; margin: 0 auto; }
@@ -76,11 +59,6 @@
     .card {
       background: var(--card); border-radius: var(--radius); padding: 1.25rem;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.05);
-    }
-    .card-title {
-      display: flex; align-items: center; gap: 7px;
-      font-size: 11px; font-weight: 700; color: var(--text-2);
-      letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 1.1rem;
     }
 
     /* ── Fields ── */
@@ -102,6 +80,16 @@
     }
     select:focus { border-color: var(--accent); }
     .select-wrap svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-3); }
+
+    /* date input */
+    input[type="date"] {
+      width: 100%; font-size: 16px; font-weight: 600; color: var(--text);
+      padding: 13px 14px; border-radius: 12px;
+      border: 1.5px solid var(--border); background: var(--card-2);
+      outline: none; -webkit-appearance: none; appearance: none;
+      transition: border-color 0.15s; color-scheme: dark;
+    }
+    input[type="date"]:focus { border-color: var(--accent); }
 
     /* stepper */
     .stepper { display: flex; align-items: center; background: var(--card-2); border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -139,7 +127,9 @@
     .result-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.6rem; }
     .result-label { font-size: 11px; color: var(--text-2); margin-bottom: 3px; }
     .result-amount { font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; line-height: 1; }
-    .result-detail { font-size: 11px; color: var(--text-3); margin-top: 5px; line-height: 1.7; }
+    .result-detail { font-size: 11px; color: var(--text-3); line-height: 1.7; }
+    .result-detail-row { display: flex; align-items: center; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
+    .result-detail-sep { font-size: 11px; color: var(--text-3); }
     .result-rhs { text-align: right; }
     .result-per-amount { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
     .result-actions { display: flex; gap: 8px; }
@@ -157,9 +147,17 @@
     }
     .copy-btn:active { opacity: 0.75; }
 
-    .footer-note { text-align: center; font-size: 11px; color: var(--text-3); padding: 0.5rem 0 0.25rem; }
-    .version-badge {
-      position: fixed; bottom: calc(160px + env(safe-area-inset-bottom)); right: 10px;
+    .line-hint {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 8px; padding: 8px 12px; border-radius: 9px;
+      background: rgba(0,185,0,0.1); border: 1px solid rgba(0,185,0,0.25);
+      font-size: 12px; color: #6fcf6f;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.version-badge {
+      position: fixed; bottom: calc(175px + env(safe-area-inset-bottom)); right: 10px;
       font-size: 10px; color: rgba(255,255,255,0.2); z-index: 99; pointer-events: none;
     }
   </style>
@@ -173,29 +171,20 @@
       包場方案
     </div>
     <div class="hero-title">Wink · 1 號店</div>
-<div class="hero-year">2026 年適用</div>
-  </div>
-
-  <!-- Day type toggle -->
-  <div class="day-toggle-wrap">
-    <div class="day-toggle">
-      <button class="day-btn active" id="btnWeekday" onclick="setDayType('weekday')">
-        <i data-lucide="sun" style="width:15px;height:15px;"></i>平日
-      </button>
-      <button class="day-btn" id="btnHoliday" onclick="setDayType('holiday')">
-        <i data-lucide="star" style="width:15px;height:15px;"></i>假日
-      </button>
-    </div>
   </div>
 
   <!-- Content -->
   <div class="content">
 
-    <!-- 試算工具 -->
     <div class="card">
-      <div class="card-title">
-        <i data-lucide="sliders-horizontal" style="width:13px;height:13px;"></i>
-        試算工具
+      <!-- 活動日期 -->
+      <div class="field">
+        <div class="field-label">
+          <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+          活動日期
+          <span class="day-type-badge" id="dayTypeBadge">假日</span>
+        </div>
+        <input type="date" id="dateInput" onchange="onDateChange()" />
       </div>
 
       <!-- 開始時間 -->
@@ -269,7 +258,6 @@
       </div>
     </div>
 
-<div class="footer-note">費用單位為新台幣</div>
   </div>
 
   <!-- Sticky Result Bar -->
@@ -277,9 +265,17 @@
     <div class="result-bar-inner">
       <div class="result-row">
         <div>
-          <div class="result-label">預估總費用 <span style="font-weight:400;opacity:0.7;">· 詳細以店家報價為主</span></div>
+          <div class="result-label">
+            <span id="rateTypeLabel" style="color:var(--accent);font-weight:700;">假日費率</span>
+            · 預估總費用
+            <span style="font-weight:400;opacity:0.5;font-size:10px;">· 詳細以店家報價為主</span>
+          </div>
           <div id="resultAmount" class="result-amount">–</div>
-          <div id="resultDetail" class="result-detail">–</div>
+          <div class="result-detail-row">
+            <span id="resultDetailVenue" class="result-detail">–</span>
+            <span class="result-detail-sep">＋</span>
+            <span id="resultDetailHead" class="result-detail">–</span>
+          </div>
         </div>
         <div class="result-rhs">
           <div class="result-label">平均每人</div>
@@ -289,16 +285,16 @@
       <div class="result-actions">
         <div class="result-note" style="flex:1;">
           <i data-lucide="check-circle" style="width:13px;height:13px;flex-shrink:0;"></i>
-          總費用可全額抵餐飲酒水消費
-        </div>
-        <div class="result-note" style="flex:0 0 auto;gap:5px;">
-          <i data-lucide="receipt" style="width:13px;height:13px;flex-shrink:0;"></i>
-          訂金&nbsp;<span id="deposit" style="font-weight:700;">–</span>
+          可全額抵消費 · 訂金 <span id="deposit" style="font-weight:700;">–</span>
         </div>
         <button class="copy-btn" onclick="copyQuote()">
           <i data-lucide="copy" style="width:13px;height:13px;"></i>
           複製
         </button>
+      </div>
+      <div id="lineHint" class="line-hint" style="display:none;">
+        <i data-lucide="message-circle" style="width:13px;height:13px;flex-shrink:0;"></i>
+        請將報價貼至 LINE 官方帳號，我們將盡快回覆確認預約
       </div>
     </div>
   </div>
@@ -312,7 +308,7 @@
     //  CONFIG — 調整價格只需修改這裡
     // ═══════════════════════════════════════
     const CONFIG = {
-      version:         'v1.1',
+      version:         'v1.2',
       depositRate:     0.3,     // 預收訂金比例（0.3 = 30%）
       operatingStart:  '20:30', // 營業時段起點
       lateAfter:       '26:00', // 顛峰結束時間（隔天 02:00，以 26:00 表示）
@@ -346,6 +342,47 @@
     };
     // ═══════════════════════════════════════
 
+    // 2026 台灣國定假日（含補假）
+    const HOLIDAYS_2026 = new Set([
+      '2026-01-01',
+      '2026-02-15','2026-02-16','2026-02-17','2026-02-18','2026-02-19',
+      '2026-02-27',
+      '2026-04-03','2026-04-06',
+      '2026-05-01',
+      '2026-06-19',
+      '2026-09-25','2026-09-28',
+      '2026-10-09','2026-10-26',
+      '2026-12-25',
+    ]);
+
+    function toDateStr(date) {
+      return date.getFullYear() + '-' +
+        String(date.getMonth()+1).padStart(2,'0') + '-' +
+        String(date.getDate()).padStart(2,'0');
+    }
+
+    function detectDayType(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      const dow = date.getDay(); // 0=日,5=五,6=六
+      if (dow === 5 || dow === 6) return 'holiday';
+      if (HOLIDAYS_2026.has(dateStr)) return 'holiday';
+      // 例假日前夕
+      const next = new Date(y, m - 1, d + 1);
+      if (HOLIDAYS_2026.has(toDateStr(next))) return 'holiday';
+      return 'weekday';
+    }
+
+    function onDateChange() {
+      const dateStr = document.getElementById('dateInput').value;
+      if (!dateStr) return;
+      setDayType(detectDayType(dateStr));
+    }
+
+    function todayStr() {
+      return toDateStr(new Date());
+    }
+
     function toMin(hhmm) {
       const [h, m] = hhmm.split(':').map(Number);
       return h * 60 + m;
@@ -366,11 +403,26 @@
     let headCount = CONFIG.pricing.weekday.minHead;
     let extraHalfHours = 0;
 
+    function updateDayTypeUI(type) {
+      const isHoliday = type === 'holiday';
+      const badge = document.getElementById('dayTypeBadge');
+      badge.textContent = isHoliday ? '假日' : '平日';
+      badge.className = 'day-type-badge' + (isHoliday ? '' : ' weekday');
+      document.getElementById('rateTypeLabel').textContent = isHoliday ? '假日費率' : '平日費率';
+    }
+
+    // 初始化日期，並自動判斷平假日
+    (function initDate() {
+      const input = document.getElementById('dateInput');
+      input.value = todayStr();
+      dayType = detectDayType(input.value);
+      updateDayTypeUI(dayType);
+    })();
+
     // ── Day type ──
     function setDayType(type) {
       dayType = type;
-      document.getElementById('btnWeekday').classList.toggle('active', type === 'weekday');
-      document.getElementById('btnHoliday').classList.toggle('active', type === 'holiday');
+      updateDayTypeUI(type);
       const p = CONFIG.pricing[type];
       if (headCount < p.minHead) headCount = p.minHead;
       if (headCount > p.maxHead) headCount = p.maxHead;
@@ -460,12 +512,13 @@
       const total = venueTotal + headFee;
       const deposit = Math.round(total * CONFIG.depositRate);
 
-      const now = new Date();
-      const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+      const activityDate = document.getElementById('dateInput').value || todayStr();
+      const [ay, am, ad] = activityDate.split('-');
+      const activityDateFmt = `${ay}/${am}/${ad}`;
 
       const lines = [
         '【Wink 1號店 包場報價】',
-        `試算日期：${dateStr}`,
+        `活動日期：${activityDateFmt}`,
         `日期類型：${dayType === 'holiday' ? '假日' : '平日'}`,
         `時段：${slot.label} - ${toTimeLabel(endMin)}`,
         `人數：${headCount} 位`,
@@ -478,15 +531,40 @@
         '總費用可全額抵餐飲酒水消費',
       ];
 
-      navigator.clipboard.writeText(lines.join('\n')).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px;"></i> 已複製';
+      const text = lines.join('\n');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showCopied).catch(() => { execCopy(text); showCopied(); });
+      } else {
+        execCopy(text); showCopied();
+      }
+    }
+
+    function execCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+    }
+
+    function showCopied() {
+      const btn = document.querySelector('.copy-btn');
+      btn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px;"></i> 已複製';
+      lucide.createIcons();
+
+      // 重播 animation（移除再加回）
+      const hint = document.getElementById('lineHint');
+      hint.style.display = 'none';
+      void hint.offsetWidth; // reflow
+      hint.style.display = 'flex';
+      lucide.createIcons();
+
+      setTimeout(() => {
+        btn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px;"></i> 複製';
         lucide.createIcons();
-        setTimeout(() => {
-          btn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px;"></i> 複製';
-          lucide.createIcons();
-        }, 2000);
-      });
+      }, 2000);
     }
 
     // ── Main calc ──
@@ -526,10 +604,10 @@
       document.getElementById('resultAmount').textContent = '$' + total.toLocaleString();
       document.getElementById('perPerson').textContent    = '$' + perPerson.toLocaleString();
 
-      let detail = `場地 $${venueTotal.toLocaleString()}`;
-      if (extraHalfHours > 0) detail += `（含延長 $${extraFee.toLocaleString()}）`;
-      detail += `\n人頭 $${headFee.toLocaleString()}（${headCount} 位 × $${p.perHead}）`;
-      document.getElementById('resultDetail').textContent = detail;
+      let venueDetail = `場地 $${venueTotal.toLocaleString()}`;
+      if (extraHalfHours > 0) venueDetail += `（含延長 $${extraFee.toLocaleString()}）`;
+      document.getElementById('resultDetailVenue').textContent = venueDetail;
+      document.getElementById('resultDetailHead').textContent = `人頭 $${headFee.toLocaleString()}（${headCount} 位 × $${p.perHead}）`;
       document.getElementById('deposit').textContent = '$' + Math.round(total * CONFIG.depositRate).toLocaleString();
 
       document.getElementById('btnExtraMinus').disabled = extraHalfHours === 0;
