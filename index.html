@@ -277,7 +277,7 @@
     <div class="result-bar-inner">
       <div class="result-row">
         <div>
-          <div class="result-label">預估總費用</div>
+          <div class="result-label">預估總費用 <span style="font-weight:400;opacity:0.7;">· 詳細以店家報價為主</span></div>
           <div id="resultAmount" class="result-amount">–</div>
           <div id="resultDetail" class="result-detail">–</div>
         </div>
@@ -316,21 +316,22 @@
       depositRate:     0.3,     // 預收訂金比例（0.3 = 30%）
       operatingStart:  '20:30', // 營業時段起點
       baseHours:       4,       // 基本包場時數
-      maxEndTime:      '28:00', // 最晚結束時間（隔天 04:00，以 28:00 表示）
       defaultStart:    '19:00', // 預設開始時間
       slotFrom:        '12:00', // 最早可選開始時間
-      slotTo:          '24:00', // 最晚可選開始時間
+      slotTo:          '23:00', // 最晚可選開始時間
 
       pricing: {
         weekday: {
+          maxEndTime: '28:00',  // 最晚結束時間（隔天 04:00，以 28:00 表示）
           base:      14000,  // 基本場地費
-          extBefore: 1500,   // 營業前延長費／每半小時
-          extAfter:  1500,   // 營業後延長費／每半小時
+          extBefore: 1000,   // 營業前延長費／每半小時
+          extAfter:  1000,   // 營業後延長費／每半小時
           perHead:   400,    // 人頭費／每位
           minHead:   30,     // 最低人數
           maxHead:   150,    // 最多人數
         },
         holiday: {
+          maxEndTime: '29:00',  // 最晚結束時間（隔天 05:00，以 29:00 表示）
           base:      14000,
           extBefore: 1500,
           extAfter:  3000,
@@ -349,10 +350,11 @@
 
     const _operatingStart = toMin(CONFIG.operatingStart);
     const _baseDuration   = CONFIG.baseHours * 60;
-    const _maxEndMin      = toMin(CONFIG.maxEndTime);
     const _slotFrom       = toMin(CONFIG.slotFrom);
     const _slotTo         = toMin(CONFIG.slotTo);
     const _slotStep       = 30;
+
+    function maxEndMin() { return toMin(CONFIG.pricing[dayType].maxEndTime); }
 
     document.getElementById('versionLabel').textContent = CONFIG.version;
 
@@ -406,7 +408,7 @@
       const slot = slots[idx];
       const newExtra = extraHalfHours + delta;
       if (newExtra < 0) return;
-      if (slot.minutes + _baseDuration + newExtra * _slotStep > _maxEndMin) return;
+      if (slot.minutes + _baseDuration + newExtra * _slotStep > maxEndMin()) return;
       extraHalfHours = newExtra;
       calc();
     }
@@ -478,7 +480,7 @@
       const p = CONFIG.pricing[dayType];
       const idx = parseInt(sel.value);
       const slot = slots[idx];
-      const maxExtra = Math.floor((_maxEndMin - slot.minutes - _baseDuration) / _slotStep);
+      const maxExtra = Math.floor((maxEndMin() - slot.minutes - _baseDuration) / _slotStep);
       if (extraHalfHours > maxExtra) extraHalfHours = Math.max(0, maxExtra);
 
       const endMin = slot.minutes + _baseDuration + extraHalfHours * _slotStep;
