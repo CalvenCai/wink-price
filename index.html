@@ -27,7 +27,7 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: calc(140px + env(safe-area-inset-bottom));
+      padding-bottom: calc(160px + env(safe-area-inset-bottom));
     }
 
     /* ── Hero ── */
@@ -38,177 +38,78 @@
       color: #fff;
     }
     .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--accent);
-      color: var(--dark);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin-bottom: 0.9rem;
-      letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--accent); color: var(--dark);
+      font-size: 11px; font-weight: 700;
+      padding: 4px 12px; border-radius: 999px;
+      margin-bottom: 0.9rem; letter-spacing: 0.5px;
     }
-    .hero-title {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.5px;
-    }
-    .hero-sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 1.4rem;
-      line-height: 1.5;
-    }
-    .badges {
-      display: flex;
-      justify-content: center;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: rgba(201,116,112,0.1);
-      border: 1px solid rgba(201,116,112,0.35);
-      color: var(--accent);
-      font-size: 12px;
-      padding: 5px 11px;
-      border-radius: 999px;
+    .hero-title { font-size: 26px; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: -0.5px; }
+    .hero-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; line-height: 1.5; }
+    .hero-year {
+      display: inline-block;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px; padding: 4px 12px;
+      font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.5px;
     }
 
-    /* ── Day type toggle ── */
-    .day-toggle-wrap {
-      padding: 0.875rem 1rem 0;
-      max-width: 520px;
-      margin: 0 auto;
-    }
+    /* ── Toggle ── */
+    .day-toggle-wrap { padding: 0.875rem 1rem 0; max-width: 520px; margin: 0 auto; }
     .day-toggle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--card);
-      border-radius: 14px;
-      padding: 4px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--card); border-radius: 14px; padding: 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.05);
     }
     .day-btn {
-      padding: 11px 0;
-      border: none;
-      background: transparent;
-      border-radius: 11px;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-2);
-      cursor: pointer;
+      padding: 11px 0; border: none; background: transparent; border-radius: 11px;
+      font-size: 15px; font-weight: 600; color: var(--text-2); cursor: pointer;
       transition: background 0.18s, color 0.18s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
       -webkit-tap-highlight-color: transparent;
     }
-    .day-btn.active {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    }
+    .day-btn.active { background: var(--accent); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
     .day-btn:not(.active):active { background: var(--card-2); }
 
     /* ── Content ── */
-    .content {
-      padding: 0.75rem 1rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      max-width: 520px;
-      margin: 0 auto;
-    }
+    .content { padding: 0.75rem 1rem 0; display: flex; flex-direction: column; gap: 0.75rem; max-width: 520px; margin: 0 auto; }
 
     /* ── Card ── */
     .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 1.25rem;
+      background: var(--card); border-radius: var(--radius); padding: 1.25rem;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.05);
     }
     .card-title {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-2);
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-bottom: 1.1rem;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; color: var(--text-2);
+      letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 1.1rem;
     }
 
     /* ── Fields ── */
     .field { margin-bottom: 0.9rem; }
     .field:last-child { margin-bottom: 0; }
     .field-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
-      margin-bottom: 7px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 7px;
+      display: flex; align-items: center; gap: 5px;
     }
-    .field-label-sub {
-      font-size: 11px;
-      color: var(--text-3);
-      font-weight: 400;
-    }
+    .field-label-sub { font-size: 11px; color: var(--text-3); font-weight: 400; }
 
     /* select */
     .select-wrap { position: relative; }
     select {
-      width: 100%;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      padding: 13px 40px 13px 14px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: var(--card-2);
-      outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-      transition: border-color 0.15s;
+      width: 100%; font-size: 16px; font-weight: 600; color: var(--text);
+      padding: 13px 40px 13px 14px; border-radius: 12px;
+      border: 1.5px solid var(--border); background: var(--card-2);
+      outline: none; -webkit-appearance: none; appearance: none; transition: border-color 0.15s;
     }
-    select:focus { border-color: var(--accent); background: var(--card-2); }
-    .select-wrap svg {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--text-3);
-    }
+    select:focus { border-color: var(--accent); }
+    .select-wrap svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-3); }
 
     /* stepper */
-    .stepper {
-      display: flex;
-      align-items: center;
-      background: var(--card-2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
+    .stepper { display: flex; align-items: center; background: var(--card-2); border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
     .step-btn {
-      width: 52px; height: 52px;
-      border: none;
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
-      transition: background 0.1s;
+      width: 52px; height: 52px; border: none; background: transparent; color: var(--text);
+      cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent; transition: background 0.1s;
     }
     .step-btn:active:not(:disabled) { background: rgba(255,255,255,0.08); }
     .step-btn:disabled { opacity: 0.25; cursor: not-allowed; }
@@ -217,85 +118,71 @@
     .step-val-main { font-size: 16px; font-weight: 600; color: var(--text); }
     .step-val-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
 
-    /* number input */
-    input[type=number] {
-      width: 100%;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      padding: 13px 14px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: var(--card-2);
-      outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-      transition: border-color 0.15s;
-    }
-    input[type=number]:focus { border-color: var(--accent); background: var(--card-2); }
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button { opacity: 1; }
-
     /* time chip */
     .time-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--card-2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 13px 16px;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      width: 100%;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--card-2); border: 1.5px solid var(--border); border-radius: 12px;
+      padding: 13px 16px; font-size: 16px; font-weight: 600; color: var(--text); width: 100%;
     }
     .time-chip svg { color: var(--text-3); flex-shrink: 0; }
 
     .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
+    /* ── Rate info accordion ── */
+    .info-toggle {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      background: none; border: none; color: var(--text-2); font-size: 13px; font-weight: 500;
+      cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent;
+    }
+    .info-toggle svg { transition: transform 0.2s; flex-shrink: 0; }
+    .info-toggle.open svg { transform: rotate(180deg); }
+    .info-body {
+      overflow: hidden; max-height: 0; transition: max-height 0.25s ease;
+    }
+    .info-body.open { max-height: 300px; }
+    .info-rows { padding-top: 0.75rem; display: flex; flex-direction: column; gap: 6px; }
+    .info-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; padding: 8px 12px; border-radius: 8px; background: var(--card-2);
+    }
+    .info-row-label { color: var(--text-2); }
+    .info-row-val { font-weight: 600; color: var(--text); }
+    .info-row-val.highlight { color: var(--accent); }
+
     /* ── Sticky Result ── */
     .result-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
       background: var(--dark);
-      padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
+      padding: 0.875rem 1.25rem calc(0.875rem + env(safe-area-inset-bottom));
       z-index: 100;
       box-shadow: 0 -1px 0 rgba(255,255,255,0.06), 0 -8px 24px rgba(0,0,0,0.25);
     }
     .result-bar-inner { max-width: 520px; margin: 0 auto; }
-    .result-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 0.7rem;
-    }
+    .result-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.6rem; }
     .result-label { font-size: 11px; color: var(--text-2); margin-bottom: 3px; }
     .result-amount { font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; line-height: 1; }
     .result-detail { font-size: 11px; color: var(--text-3); margin-top: 5px; line-height: 1.7; }
     .result-rhs { text-align: right; }
     .result-per-amount { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .result-actions { display: flex; gap: 8px; }
     .result-note {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: 8px 12px;
-      font-size: 12px;
-      color: #fff;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 9px; padding: 8px 12px; font-size: 12px; color: #fff;
     }
+    .copy-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--accent); border: none; border-radius: 9px;
+      padding: 8px 14px; font-size: 12px; font-weight: 600; color: #fff;
+      cursor: pointer; flex-shrink: 0; -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s;
+    }
+    .copy-btn:active { opacity: 0.75; }
 
     .footer-note { text-align: center; font-size: 11px; color: var(--text-3); padding: 0.5rem 0 0.25rem; }
     .version-badge {
-      position: fixed;
-      bottom: calc(8px + env(safe-area-inset-bottom));
-      right: 10px;
-      font-size: 10px;
-      color: rgba(255,255,255,0.2);
-      z-index: 99;
-      pointer-events: none;
+      position: fixed; bottom: calc(8px + env(safe-area-inset-bottom)); right: 10px;
+      font-size: 10px; color: rgba(255,255,255,0.2); z-index: 99; pointer-events: none;
     }
   </style>
 </head>
@@ -309,27 +196,25 @@
     </div>
     <div class="hero-title">Wink · 1 號店</div>
     <div class="hero-sub">至少 4 小時 · 最低 30 位起</div>
-    <div style="display:inline-block;margin-top:0.75rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:0.5px;">
-      2026 年適用
-    </div>
+    <div class="hero-year">2026 年適用</div>
   </div>
 
   <!-- Day type toggle -->
   <div class="day-toggle-wrap">
     <div class="day-toggle">
       <button class="day-btn active" id="btnWeekday" onclick="setDayType('weekday')">
-        <i data-lucide="sun" style="width:15px;height:15px;"></i>
-        平日
+        <i data-lucide="sun" style="width:15px;height:15px;"></i>平日
       </button>
       <button class="day-btn" id="btnHoliday" onclick="setDayType('holiday')">
-        <i data-lucide="star" style="width:15px;height:15px;"></i>
-        假日
+        <i data-lucide="star" style="width:15px;height:15px;"></i>假日
       </button>
     </div>
   </div>
 
   <!-- Content -->
   <div class="content">
+
+    <!-- 試算工具 -->
     <div class="card">
       <div class="card-title">
         <i data-lucide="sliders-horizontal" style="width:13px;height:13px;"></i>
@@ -353,9 +238,10 @@
         <div class="field-label">
           <i data-lucide="timer" style="width:14px;height:14px;"></i>
           延長時數
+          <span class="field-label-sub" id="extRateHint"></span>
         </div>
         <div class="stepper">
-          <button class="step-btn" id="btnMinus" onclick="changeExtra(-1)" aria-label="減少">
+          <button class="step-btn" id="btnExtraMinus" onclick="changeExtra(-1)" aria-label="減少">
             <i data-lucide="minus" style="width:18px;height:18px;"></i>
           </button>
           <div class="step-divider"></div>
@@ -364,7 +250,7 @@
             <div class="step-val-sub" id="extraHint">不延長</div>
           </div>
           <div class="step-divider"></div>
-          <button class="step-btn" id="btnPlus" onclick="changeExtra(1)" aria-label="增加">
+          <button class="step-btn" id="btnExtraPlus" onclick="changeExtra(1)" aria-label="增加">
             <i data-lucide="plus" style="width:18px;height:18px;"></i>
           </button>
         </div>
@@ -389,10 +275,36 @@
         <div class="field-label">
           <i data-lucide="users" style="width:14px;height:14px;"></i>
           預計人數
-          <span class="field-label-sub">（最低 30 位）</span>
+          <span class="field-label-sub" id="headRateHint"></span>
         </div>
-        <input type="number" id="headCount" value="30" min="30" max="200"
-               inputmode="numeric" oninput="clampAndCalc()" />
+        <div class="stepper">
+          <button class="step-btn" id="btnHeadMinus" onclick="changeHead(-1)" aria-label="減少人數">
+            <i data-lucide="minus" style="width:18px;height:18px;"></i>
+          </button>
+          <div class="step-divider"></div>
+          <div class="step-val">
+            <div class="step-val-main" id="headVal">30</div>
+            <div class="step-val-sub" id="headHint">最低 30 位</div>
+          </div>
+          <div class="step-divider"></div>
+          <button class="step-btn" id="btnHeadPlus" onclick="changeHead(1)" aria-label="增加人數">
+            <i data-lucide="plus" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 費率說明（收合式） -->
+    <div class="card">
+      <button class="info-toggle" id="infoToggle" onclick="toggleInfo()">
+        <span style="display:flex;align-items:center;gap:7px;">
+          <i data-lucide="info" style="width:14px;height:14px;"></i>
+          費率說明
+        </span>
+        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+      </button>
+      <div class="info-body" id="infoBody">
+        <div class="info-rows" id="infoRows"></div>
       </div>
     </div>
 
@@ -413,15 +325,19 @@
           <div id="perPerson" class="result-per-amount">–</div>
         </div>
       </div>
-      <div style="display:flex;gap:8px;margin-bottom:8px;">
+      <div class="result-actions">
         <div class="result-note" style="flex:1;">
           <i data-lucide="check-circle" style="width:13px;height:13px;flex-shrink:0;"></i>
           總費用可全額抵餐飲酒水消費
         </div>
         <div class="result-note" style="flex:0 0 auto;gap:5px;">
           <i data-lucide="receipt" style="width:13px;height:13px;flex-shrink:0;"></i>
-          訂金 30%&nbsp;<span id="deposit" style="font-weight:700;">–</span>
+          訂金&nbsp;<span id="deposit" style="font-weight:700;">–</span>
         </div>
+        <button class="copy-btn" onclick="copyQuote()">
+          <i data-lucide="copy" style="width:13px;height:13px;"></i>
+          複製
+        </button>
       </div>
     </div>
   </div>
@@ -463,7 +379,6 @@
     };
     // ═══════════════════════════════════════
 
-    // 將 "HH:MM" 轉為分鐘數（內部計算用）
     function toMin(hhmm) {
       const [h, m] = hhmm.split(':').map(Number);
       return h * 60 + m;
@@ -479,16 +394,23 @@
     document.getElementById('versionLabel').textContent = CONFIG.version;
 
     let dayType = 'weekday';
+    let headCount = CONFIG.pricing.weekday.minHead;
+    let extraHalfHours = 0;
 
+    // ── Day type ──
     function setDayType(type) {
       dayType = type;
       document.getElementById('btnWeekday').classList.toggle('active', type === 'weekday');
       document.getElementById('btnHoliday').classList.toggle('active', type === 'holiday');
+      const p = CONFIG.pricing[type];
+      if (headCount < p.minHead) headCount = p.minHead;
       extraHalfHours = 0;
+      updateInfoRows();
       calc();
       lucide.createIcons();
     }
 
+    // ── Slots ──
     const slots = [];
     for (let m = _slotFrom; m <= _slotTo; m += _slotStep) {
       const h = Math.floor(m / 60) % 24;
@@ -506,24 +428,16 @@
     });
     sel.addEventListener('change', () => { extraHalfHours = 0; calc(); });
 
-    let extraHalfHours = 0;
-
-    function calcVenuePrice(startMin, extraHalves) {
+    // ── Head count stepper ──
+    function changeHead(delta) {
       const p = CONFIG.pricing[dayType];
-      const baseEndMin = startMin + _baseDuration;
-      let price = p.base;
-
-      if (baseEndMin > _operatingStart) {
-        price += ((baseEndMin - _operatingStart) / _slotStep) * p.extAfter;
-      }
-
-      for (let i = 0; i < extraHalves; i++) {
-        const thisEnd = baseEndMin + (i + 1) * _slotStep;
-        price += thisEnd <= _operatingStart ? p.extBefore : p.extAfter;
-      }
-      return price;
+      const next = headCount + delta;
+      if (next < p.minHead) return;
+      headCount = next;
+      calc();
     }
 
+    // ── Extension stepper ──
     function changeExtra(delta) {
       const idx = parseInt(sel.value);
       const slot = slots[idx];
@@ -534,19 +448,94 @@
       calc();
     }
 
+    // ── Pricing ──
+    function calcVenuePrice(startMin, extraHalves) {
+      const p = CONFIG.pricing[dayType];
+      const baseEndMin = startMin + _baseDuration;
+      let price = p.base;
+      if (baseEndMin > _operatingStart) {
+        price += ((baseEndMin - _operatingStart) / _slotStep) * p.extAfter;
+      }
+      for (let i = 0; i < extraHalves; i++) {
+        const thisEnd = baseEndMin + (i + 1) * _slotStep;
+        price += thisEnd <= _operatingStart ? p.extBefore : p.extAfter;
+      }
+      return price;
+    }
+
     function toTimeLabel(minutes) {
       const h = Math.floor(minutes / 60) % 24;
       const mm = minutes % 60;
       return String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
     }
 
-    function clampAndCalc() {
-      const inp = document.getElementById('headCount');
-      const min = CONFIG.pricing[dayType].minHead;
-      if (!isNaN(parseInt(inp.value)) && parseInt(inp.value) < min) inp.value = min;
-      calc();
+    // ── Info rows ──
+    function updateInfoRows() {
+      const p = CONFIG.pricing[dayType];
+      const rows = [
+        { label: '基本場地費（含 4 小時至 ' + CONFIG.operatingStart + '）', val: '$' + p.base.toLocaleString(), highlight: false },
+        { label: CONFIG.operatingStart + ' 前延長費／每半小時', val: '$' + p.extBefore.toLocaleString(), highlight: false },
+        { label: CONFIG.operatingStart + ' 後延長費／每半小時', val: '$' + p.extAfter.toLocaleString(), highlight: p.extAfter > p.extBefore },
+        { label: '人頭費／每位', val: '$' + p.perHead.toLocaleString(), highlight: false },
+        { label: '最低人數', val: p.minHead + ' 位', highlight: false },
+      ];
+      document.getElementById('infoRows').innerHTML = rows.map(r =>
+        `<div class="info-row">
+          <span class="info-row-label">${r.label}</span>
+          <span class="info-row-val${r.highlight ? ' highlight' : ''}">${r.val}</span>
+        </div>`
+      ).join('');
     }
 
+    function toggleInfo() {
+      const body = document.getElementById('infoBody');
+      const btn  = document.getElementById('infoToggle');
+      body.classList.toggle('open');
+      btn.classList.toggle('open');
+      lucide.createIcons();
+    }
+
+    // ── Copy quote ──
+    function copyQuote() {
+      const idx = parseInt(sel.value);
+      const slot = slots[idx];
+      const p = CONFIG.pricing[dayType];
+      const endMin = slot.minutes + _baseDuration + extraHalfHours * _slotStep;
+      const venueTotal = calcVenuePrice(slot.minutes, extraHalfHours);
+      const headFee = headCount * p.perHead;
+      const total = venueTotal + headFee;
+      const deposit = Math.round(total * CONFIG.depositRate);
+
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+
+      const lines = [
+        '【Wink 1號店 包場報價】',
+        `試算日期：${dateStr}`,
+        `日期類型：${dayType === 'holiday' ? '假日' : '平日'}`,
+        `時段：${slot.label} - ${toTimeLabel(endMin)}`,
+        `人數：${headCount} 位`,
+        '─────────────',
+        `場地費：$${venueTotal.toLocaleString()}`,
+        `人頭費：$${headFee.toLocaleString()}（${headCount} 位 × $${p.perHead}）`,
+        `預估總費用：$${total.toLocaleString()}`,
+        `預收訂金（${Math.round(CONFIG.depositRate*100)}%）：$${deposit.toLocaleString()}`,
+        '─────────────',
+        '總費用可全額抵餐飲酒水消費',
+      ];
+
+      navigator.clipboard.writeText(lines.join('\n')).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px;"></i> 已複製';
+        lucide.createIcons();
+        setTimeout(() => {
+          btn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px;"></i> 複製';
+          lucide.createIcons();
+        }, 2000);
+      });
+    }
+
+    // ── Main calc ──
     function calc() {
       const p = CONFIG.pricing[dayType];
       const idx = parseInt(sel.value);
@@ -561,6 +550,7 @@
       const basePrice  = calcVenuePrice(slot.minutes, 0);
       const extraFee   = venueTotal - basePrice;
 
+      // Extension stepper
       if (extraHalfHours === 0) {
         document.getElementById('extraVal').textContent = '0 小時';
         document.getElementById('extraHint').textContent = '不延長';
@@ -572,26 +562,39 @@
         document.getElementById('extraHint').textContent = `+$${extraFee.toLocaleString()}`;
       }
 
-      const raw     = Math.max(parseInt(document.getElementById('headCount').value) || p.minHead, p.minHead);
-      const headFee = raw * p.perHead;
-      const total   = venueTotal + headFee;
-      const perPerson = Math.round(total / raw);
+      // Extension rate hint
+      const nextEnd = slot.minutes + _baseDuration + (extraHalfHours + 1) * _slotStep;
+      const nextRate = nextEnd <= _operatingStart ? p.extBefore : p.extAfter;
+      document.getElementById('extRateHint').textContent = `（每半小時 $${nextRate.toLocaleString()}）`;
+
+      // Head count stepper
+      document.getElementById('headVal').textContent = headCount;
+      document.getElementById('headHint').textContent = headCount <= p.minHead ? `最低 ${p.minHead} 位` : `${headCount} 位`;
+      document.getElementById('headRateHint').textContent = `（每位 $${p.perHead}）`;
+
+      // Results
+      const headFee   = headCount * p.perHead;
+      const total     = venueTotal + headFee;
+      const perPerson = Math.round(total / headCount);
 
       document.getElementById('resultAmount').textContent = '$' + total.toLocaleString();
       document.getElementById('perPerson').textContent    = '$' + perPerson.toLocaleString();
 
       let detail = `場地 $${venueTotal.toLocaleString()}`;
       if (extraHalfHours > 0) detail += `（含延長 $${extraFee.toLocaleString()}）`;
-      detail += `\n人頭 $${headFee.toLocaleString()}（${raw} 位 × $${p.perHead}）`;
+      detail += `\n人頭 $${headFee.toLocaleString()}（${headCount} 位 × $${p.perHead}）`;
       document.getElementById('resultDetail').textContent = detail;
       document.getElementById('deposit').textContent = '$' + Math.round(total * CONFIG.depositRate).toLocaleString();
 
-      document.getElementById('btnMinus').disabled = extraHalfHours === 0;
-      document.getElementById('btnPlus').disabled  = extraHalfHours >= maxExtra;
+      document.getElementById('btnExtraMinus').disabled = extraHalfHours === 0;
+      document.getElementById('btnExtraPlus').disabled  = extraHalfHours >= maxExtra;
+      document.getElementById('btnHeadMinus').disabled  = headCount <= p.minHead;
 
       lucide.createIcons();
     }
 
+    // init
+    updateInfoRows();
     calc();
   </script>
 </body>
