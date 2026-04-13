@@ -461,41 +461,14 @@
 
     let extraHalfHours = 0;
 
-    function calcVenuePrice(startMin, extraHalves) {
-      const p = PRICING[dayType];
-      const baseEndMin = startMin + 240;
-      let price = p.base;
-
-      // base 4-hour window: charge difference for time after BASE_END
-      if (baseEndMin > BASE_END) {
-        const overHalves = (baseEndMin - BASE_END) / 30;
-        price += overHalves * (p.extAfter - p.extBefore);
-        // The base price already covers extBefore-rate time;
-        // we upgrade the post-BASE_END portion to extAfter rate.
-        // Actually simpler: each half-hour of the base window past BASE_END
-        // costs (extAfter - extBefore) extra vs. if it were before BASE_END.
-        // But original logic treated base price as flat — let's keep the
-        // original approach: base covers up to BASE_END at flat rate, then
-        // each half-hour past BASE_END inside the base window costs extAfter.
-      }
-
-      for (let i = 0; i < extraHalves; i++) {
-        const thisEnd = baseEndMin + (i + 1) * 30;
-        price += thisEnd <= BASE_END ? p.extBefore : p.extAfter;
-      }
-      return price;
-    }
-
-    // Rewrite calcVenuePrice to match original logic exactly
     function calcVenuePriceV2(startMin, extraHalves) {
       const p = PRICING[dayType];
       const baseEndMin = startMin + 240;
       let price = p.base;
 
-      // Original: if base 4h window overshoots BASE_END, add (overshoot / 30) * extAfter
-      if (baseEndMin > BASE_END) {
-        price += ((baseEndMin - BASE_END) / 30) * p.extAfter;
-      }
+      // Only count half-hours that are actually within the booking AND after BASE_END
+      const afterHalves = Math.max(0, baseEndMin - Math.max(startMin, BASE_END)) / 30;
+      price += afterHalves * p.extAfter;
 
       for (let i = 0; i < extraHalves; i++) {
         const thisEnd = baseEndMin + (i + 1) * 30;
