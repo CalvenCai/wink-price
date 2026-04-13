@@ -417,27 +417,41 @@
   <script>
     lucide.createIcons();
 
-    const VERSION = 'v1.0';
-    document.getElementById('versionLabel').textContent = VERSION;
+    // ═══════════════════════════════════════
+    //  CONFIG — 調整價格只需修改這裡
+    // ═══════════════════════════════════════
+    const CONFIG = {
+      version:        'v1.0',
+      depositRate:    0.3,    // 預收訂金比例
+      operatingStart: 1230,   // 營業時段起點（分鐘）= 20:30
+      baseDuration:   240,    // 基本包場時數（分鐘）= 4 小時
+      maxEndMin:      1680,   // 最晚結束時間（分鐘）= 04:00
+      defaultStart:  '19:00', // 預設開始時間
+      slotStep:       30,     // 時間選項間隔（分鐘）
+      slotFrom:       720,    // 最早開始時間（分鐘）= 12:00
+      slotTo:         1440,   // 最晚開始時間（分鐘）= 24:00
 
-    const PRICING = {
-      weekday: {
-        base: 14000,
-        extBefore: 1500,
-        extAfter: 1500,
-        perHead: 400,
-        minHead: 30,
-      },
-      holiday: {
-        base: 14000,
-        extBefore: 1500,
-        extAfter: 3000,
-        perHead: 500,
-        minHead: 30,
+      pricing: {
+        weekday: {
+          base:      14000,  // 基本場地費
+          extBefore: 1500,   // 營業前延長／半小時
+          extAfter:  1500,   // 營業後延長／半小時
+          perHead:   400,    // 人頭費／位
+          minHead:   30,     // 最低人數
+        },
+        holiday: {
+          base:      14000,
+          extBefore: 1500,
+          extAfter:  3000,
+          perHead:   500,
+          minHead:   30,
+        }
       }
     };
+    // ═══════════════════════════════════════
 
-    const BASE_END = 1230; // 20:30 in minutes
+    document.getElementById('versionLabel').textContent = CONFIG.version;
+
     let dayType = 'weekday';
 
     function setDayType(type) {
@@ -450,7 +464,7 @@
     }
 
     const slots = [];
-    for (let m = 720; m <= 1440; m += 30) {
+    for (let m = CONFIG.slotFrom; m <= CONFIG.slotTo; m += CONFIG.slotStep) {
       const h = Math.floor(m / 60) % 24;
       const mm = m % 60;
       slots.push({ label: String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0'), minutes: m });
@@ -461,26 +475,25 @@
       const opt = document.createElement('option');
       opt.value = i;
       opt.textContent = s.label;
-      if (s.label === '19:00') opt.selected = true;
+      if (s.label === CONFIG.defaultStart) opt.selected = true;
       sel.appendChild(opt);
     });
     sel.addEventListener('change', () => { extraHalfHours = 0; calc(); });
 
     let extraHalfHours = 0;
 
-    function calcVenuePriceV2(startMin, extraHalves) {
-      const p = PRICING[dayType];
-      const baseEndMin = startMin + 240;
+    function calcVenuePrice(startMin, extraHalves) {
+      const p = CONFIG.pricing[dayType];
+      const baseEndMin = startMin + CONFIG.baseDuration;
       let price = p.base;
 
-      // Each 30-min later start = +extAfter; measure from BASE_END to end of 4h block
-      if (baseEndMin > BASE_END) {
-        price += ((baseEndMin - BASE_END) / 30) * p.extAfter;
+      if (baseEndMin > CONFIG.operatingStart) {
+        price += ((baseEndMin - CONFIG.operatingStart) / CONFIG.slotStep) * p.extAfter;
       }
 
       for (let i = 0; i < extraHalves; i++) {
-        const thisEnd = baseEndMin + (i + 1) * 30;
-        price += thisEnd <= BASE_END ? p.extBefore : p.extAfter;
+        const thisEnd = baseEndMin + (i + 1) * CONFIG.slotStep;
+        price += thisEnd <= CONFIG.operatingStart ? p.extBefore : p.extAfter;
       }
       return price;
     }
@@ -490,7 +503,7 @@
       const slot = slots[idx];
       const newExtra = extraHalfHours + delta;
       if (newExtra < 0) return;
-      if (slot.minutes + 240 + newExtra * 30 > 1680) return;
+      if (slot.minutes + CONFIG.baseDuration + newExtra * CONFIG.slotStep > CONFIG.maxEndMin) return;
       extraHalfHours = newExtra;
       calc();
     }
@@ -503,22 +516,23 @@
 
     function clampAndCalc() {
       const inp = document.getElementById('headCount');
-      if (!isNaN(parseInt(inp.value)) && parseInt(inp.value) < 30) inp.value = 30;
+      const min = CONFIG.pricing[dayType].minHead;
+      if (!isNaN(parseInt(inp.value)) && parseInt(inp.value) < min) inp.value = min;
       calc();
     }
 
     function calc() {
-      const p = PRICING[dayType];
+      const p = CONFIG.pricing[dayType];
       const idx = parseInt(sel.value);
       const slot = slots[idx];
-      const maxExtra = Math.floor((1680 - slot.minutes - 240) / 30);
+      const maxExtra = Math.floor((CONFIG.maxEndMin - slot.minutes - CONFIG.baseDuration) / CONFIG.slotStep);
       if (extraHalfHours > maxExtra) extraHalfHours = Math.max(0, maxExtra);
 
-      const endMin = slot.minutes + 240 + extraHalfHours * 30;
+      const endMin = slot.minutes + CONFIG.baseDuration + extraHalfHours * CONFIG.slotStep;
       document.getElementById('endTime').textContent = toTimeLabel(endMin);
 
-      const venueTotal = calcVenuePriceV2(slot.minutes, extraHalfHours);
-      const basePrice  = calcVenuePriceV2(slot.minutes, 0);
+      const venueTotal = calcVenuePrice(slot.minutes, extraHalfHours);
+      const basePrice  = calcVenuePrice(slot.minutes, 0);
       const extraFee   = venueTotal - basePrice;
 
       if (extraHalfHours === 0) {
@@ -532,7 +546,7 @@
         document.getElementById('extraHint').textContent = `+$${extraFee.toLocaleString()}`;
       }
 
-      const raw     = Math.max(parseInt(document.getElementById('headCount').value) || 30, 30);
+      const raw     = Math.max(parseInt(document.getElementById('headCount').value) || p.minHead, p.minHead);
       const headFee = raw * p.perHead;
       const total   = venueTotal + headFee;
       const perPerson = Math.round(total / raw);
@@ -544,7 +558,7 @@
       if (extraHalfHours > 0) detail += `（含延長 $${extraFee.toLocaleString()}）`;
       detail += `\n人頭 $${headFee.toLocaleString()}（${raw} 位 × $${p.perHead}）`;
       document.getElementById('resultDetail').textContent = detail;
-      document.getElementById('deposit').textContent = '$' + Math.round(total * 0.3).toLocaleString();
+      document.getElementById('deposit').textContent = '$' + Math.round(total * CONFIG.depositRate).toLocaleString();
 
       document.getElementById('btnMinus').disabled = extraHalfHours === 0;
       document.getElementById('btnPlus').disabled  = extraHalfHours >= maxExtra;
