@@ -421,22 +421,21 @@
     //  CONFIG — 調整價格只需修改這裡
     // ═══════════════════════════════════════
     const CONFIG = {
-      version:        'v1.0',
-      depositRate:    0.3,    // 預收訂金比例
-      operatingStart: 1230,   // 營業時段起點（分鐘）= 20:30
-      baseDuration:   240,    // 基本包場時數（分鐘）= 4 小時
-      maxEndMin:      1680,   // 最晚結束時間（分鐘）= 04:00
-      defaultStart:  '19:00', // 預設開始時間
-      slotStep:       30,     // 時間選項間隔（分鐘）
-      slotFrom:       720,    // 最早開始時間（分鐘）= 12:00
-      slotTo:         1440,   // 最晚開始時間（分鐘）= 24:00
+      version:         'v1.0',
+      depositRate:     0.3,     // 預收訂金比例（0.3 = 30%）
+      operatingStart:  '20:30', // 營業時段起點
+      baseHours:       4,       // 基本包場時數
+      maxEndTime:      '28:00', // 最晚結束時間（隔天 04:00，以 28:00 表示）
+      defaultStart:    '19:00', // 預設開始時間
+      slotFrom:        '12:00', // 最早可選開始時間
+      slotTo:          '24:00', // 最晚可選開始時間
 
       pricing: {
         weekday: {
           base:      14000,  // 基本場地費
-          extBefore: 1500,   // 營業前延長／半小時
-          extAfter:  1500,   // 營業後延長／半小時
-          perHead:   400,    // 人頭費／位
+          extBefore: 1500,   // 營業前延長費／每半小時
+          extAfter:  1500,   // 營業後延長費／每半小時
+          perHead:   400,    // 人頭費／每位
           minHead:   30,     // 最低人數
         },
         holiday: {
@@ -449,6 +448,19 @@
       }
     };
     // ═══════════════════════════════════════
+
+    // 將 "HH:MM" 轉為分鐘數（內部計算用）
+    function toMin(hhmm) {
+      const [h, m] = hhmm.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    const _operatingStart = toMin(CONFIG.operatingStart);
+    const _baseDuration   = CONFIG.baseHours * 60;
+    const _maxEndMin      = toMin(CONFIG.maxEndTime);
+    const _slotFrom       = toMin(CONFIG.slotFrom);
+    const _slotTo         = toMin(CONFIG.slotTo);
+    const _slotStep       = 30;
 
     document.getElementById('versionLabel').textContent = CONFIG.version;
 
@@ -464,7 +476,7 @@
     }
 
     const slots = [];
-    for (let m = CONFIG.slotFrom; m <= CONFIG.slotTo; m += CONFIG.slotStep) {
+    for (let m = _slotFrom; m <= _slotTo; m += _slotStep) {
       const h = Math.floor(m / 60) % 24;
       const mm = m % 60;
       slots.push({ label: String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0'), minutes: m });
@@ -484,16 +496,16 @@
 
     function calcVenuePrice(startMin, extraHalves) {
       const p = CONFIG.pricing[dayType];
-      const baseEndMin = startMin + CONFIG.baseDuration;
+      const baseEndMin = startMin + _baseDuration;
       let price = p.base;
 
-      if (baseEndMin > CONFIG.operatingStart) {
-        price += ((baseEndMin - CONFIG.operatingStart) / CONFIG.slotStep) * p.extAfter;
+      if (baseEndMin > _operatingStart) {
+        price += ((baseEndMin - _operatingStart) / _slotStep) * p.extAfter;
       }
 
       for (let i = 0; i < extraHalves; i++) {
-        const thisEnd = baseEndMin + (i + 1) * CONFIG.slotStep;
-        price += thisEnd <= CONFIG.operatingStart ? p.extBefore : p.extAfter;
+        const thisEnd = baseEndMin + (i + 1) * _slotStep;
+        price += thisEnd <= _operatingStart ? p.extBefore : p.extAfter;
       }
       return price;
     }
@@ -503,7 +515,7 @@
       const slot = slots[idx];
       const newExtra = extraHalfHours + delta;
       if (newExtra < 0) return;
-      if (slot.minutes + CONFIG.baseDuration + newExtra * CONFIG.slotStep > CONFIG.maxEndMin) return;
+      if (slot.minutes + _baseDuration + newExtra * _slotStep > _maxEndMin) return;
       extraHalfHours = newExtra;
       calc();
     }
@@ -525,10 +537,10 @@
       const p = CONFIG.pricing[dayType];
       const idx = parseInt(sel.value);
       const slot = slots[idx];
-      const maxExtra = Math.floor((CONFIG.maxEndMin - slot.minutes - CONFIG.baseDuration) / CONFIG.slotStep);
+      const maxExtra = Math.floor((_maxEndMin - slot.minutes - _baseDuration) / _slotStep);
       if (extraHalfHours > maxExtra) extraHalfHours = Math.max(0, maxExtra);
 
-      const endMin = slot.minutes + CONFIG.baseDuration + extraHalfHours * CONFIG.slotStep;
+      const endMin = slot.minutes + _baseDuration + extraHalfHours * _slotStep;
       document.getElementById('endTime').textContent = toTimeLabel(endMin);
 
       const venueTotal = calcVenuePrice(slot.minutes, extraHalfHours);
