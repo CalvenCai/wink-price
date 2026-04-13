@@ -466,9 +466,10 @@
       const baseEndMin = startMin + 240;
       let price = p.base;
 
-      // Only count half-hours that are actually within the booking AND after BASE_END
-      const afterHalves = Math.max(0, baseEndMin - Math.max(startMin, BASE_END)) / 30;
-      price += afterHalves * p.extAfter;
+      // Each 30-min later start = +extAfter; measure from BASE_END to end of 4h block
+      if (baseEndMin > BASE_END) {
+        price += ((baseEndMin - BASE_END) / 30) * p.extAfter;
+      }
 
       for (let i = 0; i < extraHalves; i++) {
         const thisEnd = baseEndMin + (i + 1) * 30;
