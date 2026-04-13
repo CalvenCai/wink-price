@@ -224,7 +224,6 @@
           <div class="step-divider"></div>
           <div class="step-val">
             <div class="step-val-main" id="extraVal">0 小時</div>
-            <div class="step-val-sub" id="extraHint"></div>
           </div>
           <div class="step-divider"></div>
           <button class="step-btn" id="btnExtraPlus" onclick="changeExtra(1)" aria-label="增加">
@@ -329,6 +328,7 @@
           extAfter:  1500,   // 營業後延長費／每半小時
           perHead:   400,    // 人頭費／每位
           minHead:   30,     // 最低人數
+          maxHead:   150,    // 最多人數
         },
         holiday: {
           base:      14000,
@@ -336,6 +336,7 @@
           extAfter:  3000,
           perHead:   500,
           minHead:   30,
+          maxHead:   150,
         }
       }
     };
@@ -393,7 +394,7 @@
     function changeHead(delta) {
       const p = CONFIG.pricing[dayType];
       const next = headCount + delta;
-      if (next < p.minHead) return;
+      if (next < p.minHead || next > p.maxHead) return;
       headCount = next;
       calc();
     }
@@ -516,6 +517,7 @@
       document.getElementById('btnExtraMinus').disabled = extraHalfHours === 0;
       document.getElementById('btnExtraPlus').disabled  = extraHalfHours >= maxExtra;
       document.getElementById('btnHeadMinus').disabled  = headCount <= p.minHead;
+      document.getElementById('btnHeadPlus').disabled   = headCount >= p.maxHead;
 
       lucide.createIcons();
     }
