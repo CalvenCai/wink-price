@@ -386,7 +386,7 @@
       </div>
     </div>
 
-    <div class="footer-note">以上費用單位為新台幣</div>
+    <div class="footer-note">以上費用單位為新台幣 &nbsp;·&nbsp; <span id="versionLabel"></span></div>
   </div>
 
   <!-- Sticky Result Bar -->
@@ -403,15 +403,24 @@
           <div id="perPerson" class="result-per-amount">–</div>
         </div>
       </div>
-      <div class="result-note">
-        <i data-lucide="check-circle" style="width:13px;height:13px;flex-shrink:0;"></i>
-        總費用可全額抵餐飲酒水消費
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <div class="result-note" style="flex:1;">
+          <i data-lucide="check-circle" style="width:13px;height:13px;flex-shrink:0;"></i>
+          總費用可全額抵餐飲酒水消費
+        </div>
+        <div class="result-note" style="flex:0 0 auto;gap:5px;">
+          <i data-lucide="receipt" style="width:13px;height:13px;flex-shrink:0;"></i>
+          訂金 30%&nbsp;<span id="deposit" style="font-weight:700;">–</span>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
+
+    const VERSION = 'v1.0';
+    document.getElementById('versionLabel').textContent = VERSION;
 
     const PRICING = {
       weekday: {
@@ -537,6 +546,7 @@
       if (extraHalfHours > 0) detail += `（含延長 $${extraFee.toLocaleString()}）`;
       detail += `\n人頭 $${headFee.toLocaleString()}（${raw} 位 × $${p.perHead}）`;
       document.getElementById('resultDetail').textContent = detail;
+      document.getElementById('deposit').textContent = '$' + Math.round(total * 0.3).toLocaleString();
 
       document.getElementById('btnMinus').disabled = extraHalfHours === 0;
       document.getElementById('btnPlus').disabled  = extraHalfHours >= maxExtra;
