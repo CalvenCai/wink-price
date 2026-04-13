@@ -9,15 +9,16 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --accent: #b8706c;   /* Wink 珊瑚粉（柔化） */
-      --blue:   #2d6080;   /* Wink 鋼藍 */
-      --dark:   #1b2a38;   /* Wink 深海軍藍 */
-      --bg:     #f0f2f5;
-      --card:   #ffffff;
-      --text:   #1d1d1f;
-      --text-2: #6e6e73;
-      --text-3: #aeaeb2;
-      --border: #e5e5ea;
+      --accent: #b8706c;
+      --blue:   #2d6080;
+      --dark:   #1b2a38;
+      --bg:     #0f1a24;
+      --card:   #1b2a38;
+      --card-2: #223040;
+      --text:   #f0f0f0;
+      --text-2: rgba(255,255,255,0.6);
+      --text-3: rgba(255,255,255,0.35);
+      --border: rgba(255,255,255,0.1);
       --radius: 16px;
     }
 
@@ -91,7 +92,7 @@
       background: var(--card);
       border-radius: 14px;
       padding: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.05);
     }
     .day-btn {
       padding: 11px 0;
@@ -110,11 +111,11 @@
       -webkit-tap-highlight-color: transparent;
     }
     .day-btn.active {
-      background: var(--dark);
-      color: var(--accent);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
-    .day-btn:not(.active):active { background: #f2f2f7; }
+    .day-btn:not(.active):active { background: var(--card-2); }
 
     /* ── Content ── */
     .content {
@@ -131,7 +132,7 @@
       background: var(--card);
       border-radius: var(--radius);
       padding: 1.25rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.05);
     }
     .card-title {
       display: flex;
@@ -173,13 +174,13 @@
       padding: 13px 40px 13px 14px;
       border-radius: 12px;
       border: 1.5px solid var(--border);
-      background: #fafafa;
+      background: var(--card-2);
       outline: none;
       -webkit-appearance: none;
       appearance: none;
       transition: border-color 0.15s;
     }
-    select:focus { border-color: #007aff; background: #fff; }
+    select:focus { border-color: var(--accent); background: var(--card-2); }
     .select-wrap svg {
       position: absolute;
       right: 12px;
@@ -193,7 +194,7 @@
     .stepper {
       display: flex;
       align-items: center;
-      background: #fafafa;
+      background: var(--card-2);
       border: 1.5px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
@@ -209,7 +210,7 @@
       -webkit-tap-highlight-color: transparent;
       transition: background 0.1s;
     }
-    .step-btn:active:not(:disabled) { background: #e5e5ea; }
+    .step-btn:active:not(:disabled) { background: rgba(255,255,255,0.08); }
     .step-btn:disabled { opacity: 0.25; cursor: not-allowed; }
     .step-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
     .step-val { flex: 1; text-align: center; padding: 4px 0; }
@@ -225,13 +226,13 @@
       padding: 13px 14px;
       border-radius: 12px;
       border: 1.5px solid var(--border);
-      background: #fafafa;
+      background: var(--card-2);
       outline: none;
       -webkit-appearance: none;
       appearance: none;
       transition: border-color 0.15s;
     }
-    input[type=number]:focus { border-color: #007aff; background: #fff; }
+    input[type=number]:focus { border-color: var(--accent); background: var(--card-2); }
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button { opacity: 1; }
 
@@ -240,7 +241,7 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      background: #fafafa;
+      background: var(--card-2);
       border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 13px 16px;
@@ -251,7 +252,7 @@
     }
     .time-chip svg { color: var(--text-3); flex-shrink: 0; }
 
-    .divider { border: none; border-top: 1px solid #f2f2f7; margin: 1rem 0; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
     /* ── Sticky Result ── */
     .result-bar {
@@ -269,21 +270,21 @@
       align-items: flex-end;
       margin-bottom: 0.7rem;
     }
-    .result-label { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
+    .result-label { font-size: 11px; color: var(--text-2); margin-bottom: 3px; }
     .result-amount { font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; line-height: 1; }
-    .result-detail { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 5px; line-height: 1.7; }
+    .result-detail { font-size: 11px; color: var(--text-3); margin-top: 5px; line-height: 1.7; }
     .result-rhs { text-align: right; }
     .result-per-amount { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
     .result-note {
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(201,116,112,0.08);
-      border: 1px solid rgba(201,116,112,0.2);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
       border-radius: 9px;
       padding: 8px 12px;
       font-size: 12px;
-      color: var(--accent);
+      color: #fff;
     }
 
     .footer-note { text-align: center; font-size: 11px; color: var(--text-3); padding: 0.5rem 0 0.25rem; }
