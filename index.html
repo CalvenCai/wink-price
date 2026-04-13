@@ -128,28 +128,7 @@
 
     .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
-    /* ── Rate info accordion ── */
-    .info-toggle {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      background: none; border: none; color: var(--text-2); font-size: 13px; font-weight: 500;
-      cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent;
-    }
-    .info-toggle svg { transition: transform 0.2s; flex-shrink: 0; }
-    .info-toggle.open svg { transform: rotate(180deg); }
-    .info-body {
-      overflow: hidden; max-height: 0; transition: max-height 0.25s ease;
-    }
-    .info-body.open { max-height: 300px; }
-    .info-rows { padding-top: 0.75rem; display: flex; flex-direction: column; gap: 6px; }
-    .info-row {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 13px; padding: 8px 12px; border-radius: 8px; background: var(--card-2);
-    }
-    .info-row-label { color: var(--text-2); }
-    .info-row-val { font-weight: 600; color: var(--text); }
-    .info-row-val.highlight { color: var(--accent); }
-
-    /* ── Sticky Result ── */
+/* ── Sticky Result ── */
     .result-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: var(--dark);
@@ -238,7 +217,6 @@
         <div class="field-label">
           <i data-lucide="timer" style="width:14px;height:14px;"></i>
           延長時數
-          <span class="field-label-sub" id="extRateHint"></span>
         </div>
         <div class="stepper">
           <button class="step-btn" id="btnExtraMinus" onclick="changeExtra(-1)" aria-label="減少">
@@ -275,7 +253,6 @@
         <div class="field-label">
           <i data-lucide="users" style="width:14px;height:14px;"></i>
           預計人數
-          <span class="field-label-sub" id="headRateHint"></span>
         </div>
         <div class="stepper">
           <button class="step-btn" id="btnHeadMinus" onclick="changeHead(-1)" aria-label="減少人數">
@@ -294,21 +271,7 @@
       </div>
     </div>
 
-    <!-- 費率說明（收合式） -->
-    <div class="card">
-      <button class="info-toggle" id="infoToggle" onclick="toggleInfo()">
-        <span style="display:flex;align-items:center;gap:7px;">
-          <i data-lucide="info" style="width:14px;height:14px;"></i>
-          費率說明
-        </span>
-        <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
-      </button>
-      <div class="info-body" id="infoBody">
-        <div class="info-rows" id="infoRows"></div>
-      </div>
-    </div>
-
-    <div class="footer-note">費用單位為新台幣</div>
+<div class="footer-note">費用單位為新台幣</div>
   </div>
 
   <!-- Sticky Result Bar -->
@@ -405,7 +368,6 @@
       const p = CONFIG.pricing[type];
       if (headCount < p.minHead) headCount = p.minHead;
       extraHalfHours = 0;
-      updateInfoRows();
       calc();
       lucide.createIcons();
     }
@@ -469,33 +431,7 @@
       return String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
     }
 
-    // ── Info rows ──
-    function updateInfoRows() {
-      const p = CONFIG.pricing[dayType];
-      const rows = [
-        { label: '基本場地費（含 4 小時至 ' + CONFIG.operatingStart + '）', val: '$' + p.base.toLocaleString(), highlight: false },
-        { label: CONFIG.operatingStart + ' 前延長費／每半小時', val: '$' + p.extBefore.toLocaleString(), highlight: false },
-        { label: CONFIG.operatingStart + ' 後延長費／每半小時', val: '$' + p.extAfter.toLocaleString(), highlight: p.extAfter > p.extBefore },
-        { label: '人頭費／每位', val: '$' + p.perHead.toLocaleString(), highlight: false },
-        { label: '最低人數', val: p.minHead + ' 位', highlight: false },
-      ];
-      document.getElementById('infoRows').innerHTML = rows.map(r =>
-        `<div class="info-row">
-          <span class="info-row-label">${r.label}</span>
-          <span class="info-row-val${r.highlight ? ' highlight' : ''}">${r.val}</span>
-        </div>`
-      ).join('');
-    }
-
-    function toggleInfo() {
-      const body = document.getElementById('infoBody');
-      const btn  = document.getElementById('infoToggle');
-      body.classList.toggle('open');
-      btn.classList.toggle('open');
-      lucide.createIcons();
-    }
-
-    // ── Copy quote ──
+// ── Copy quote ──
     function copyQuote() {
       const idx = parseInt(sel.value);
       const slot = slots[idx];
@@ -562,15 +498,9 @@
         document.getElementById('extraHint').textContent = `+$${extraFee.toLocaleString()}`;
       }
 
-      // Extension rate hint
-      const nextEnd = slot.minutes + _baseDuration + (extraHalfHours + 1) * _slotStep;
-      const nextRate = nextEnd <= _operatingStart ? p.extBefore : p.extAfter;
-      document.getElementById('extRateHint').textContent = `（每半小時 $${nextRate.toLocaleString()}）`;
-
       // Head count stepper
       document.getElementById('headVal').textContent = headCount;
       document.getElementById('headHint').textContent = headCount <= p.minHead ? `最低 ${p.minHead} 位` : `${headCount} 位`;
-      document.getElementById('headRateHint').textContent = `（每位 $${p.perHead}）`;
 
       // Results
       const headFee   = headCount * p.perHead;
@@ -594,7 +524,6 @@
     }
 
     // init
-    updateInfoRows();
     calc();
   </script>
 </body>
