@@ -33,8 +33,9 @@
       padding-bottom: calc(210px + env(safe-area-inset-bottom));
       overscroll-behavior: none;
       -webkit-user-select: none; user-select: none;
+      touch-action: manipulation;
     }
-    input, select { -webkit-user-select: auto; user-select: auto; }
+    input, select { -webkit-user-select: auto; user-select: auto; touch-action: manipulation; }
 
     /* ── Hero ── */
     .hero {
