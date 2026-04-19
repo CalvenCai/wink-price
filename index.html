@@ -309,6 +309,16 @@
   <div class="version-badge" id="versionLabel"></div>
 
   <script>
+    // 防止頁面縮放
+    document.addEventListener('wheel', function(e) {
+      if (e.ctrlKey) e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')) e.preventDefault();
+    });
+    document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
+    document.addEventListener('gesturechange', function(e) { e.preventDefault(); });
+
     lucide.createIcons();
 
     // ═══════════════════════════════════════
